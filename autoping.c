@@ -14,7 +14,6 @@ char sleeptime[6] = {0};
 char *iplist[64] = {0};
 char logpath[4096] = {0};
 char confpath[4096] = {0};
-char binpath[4096] = {0};
 
 int kill(pid_t pid, int sig);
 struct passwd { char *pw_name; char *pw_passwd; uid_t pw_uid; gid_t pw_gid; char *pw_gecos; char *pw_dir; char *pw_shell; };
@@ -219,6 +218,11 @@ int startTimer()
     if (!configexist()) { write(2, "\033[35merror: config not found\nno addresses to ping!\033[0m\n", 55); return 0; }
     else { readconfig(); }
 
+    char binpath[4096] = {0};
+    readlink("/proc/self/exe", binpath, 4096);
+    char *dir = strrchr(binpath, '/');
+    *(dir + 1) = '\0';
+
     char timerpath[4096];
     strcpy(timerpath, binpath);
     strcat(timerpath, "timer");
@@ -262,6 +266,11 @@ int startTimer()
 }
 int stopTimer()
 {
+    char binpath[4096] = {0};
+    readlink("/proc/self/exe", binpath, 4096);
+    char *dir = strrchr(binpath, '/');
+    *(dir + 1) = '\0';
+
     char pidpath[4096];
     strcpy(pidpath, binpath);
     strcat(pidpath, "pid");
@@ -486,10 +495,6 @@ void cli()
 
 int main(int argnum, char **args)
 {
-    readlink("/proc/self/exe", binpath, 4095);
-    char *dir = strrchr(binpath, '/');
-    *(dir + 1) = '\0';
-
     if (argnum == 1) { write(1, "\033[35mopening cli..\033[0m\n", 23); cli(); }
     else if(!strcmp(args[1], "ping")) { pingall(); }
     else if (!strcmp(args[1], "help") || !strcmp(args[1], "-h"))
