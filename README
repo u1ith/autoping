@@ -1,0 +1,13 @@
+
+A simple timer to autoping configured addresses on linux
+With a nonsimple cli tool to configure and start it
+
+usage:
+- autoping          : open prompt
+- autoping trigger  : ping your set ips
+- autoping start    : start service timer
+- autoping stop     : stop service timer
+
+build:
+  musl-gcc -Os -static -s -o autoping autoping.c
+  musl-gcc -Os -static -s -o timer timer.c
