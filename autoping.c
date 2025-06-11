@@ -151,7 +151,7 @@ void pingall()
     int failnum = 0;
     for(int i = 0; iplist[i]; i++) { if (ping(iplist[i])) { failedpings[failnum] = iplist[i]; failnum++; } }
 
-    if (logpath)
+    if (logpath[0] != '\0')
     {
         if(logpath[0] == '~')
         {
@@ -486,7 +486,7 @@ void cli()
 
 int main(int argnum, char **args)
 {
-    strcpy(binpath, realpath(args[0], NULL));
+    readlink("/proc/self/exe", binpath, 4095);
     char *dir = strrchr(binpath, '/');
     *(dir + 1) = '\0';
 
