@@ -232,7 +232,7 @@ int startTimer()
 
     char pidpath[4096];
     strcpy(pidpath, binpath);
-    strcat(pidpath, "pid");
+    strcat(pidpath, "pingpid");
     FILE *pidfile = fopen(pidpath, "r");
     if (pidfile) { write(2, "\033[35mdaemon already running\033[0m\n", 32); fclose(pidfile); return 0; }
 
@@ -273,7 +273,7 @@ int stopTimer()
 
     char pidpath[4096];
     strcpy(pidpath, binpath);
-    strcat(pidpath, "pid");
+    strcat(pidpath, "pingpid");
     FILE *pidfile = fopen(pidpath, "r");
     if (pidfile)
     {
