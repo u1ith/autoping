@@ -93,7 +93,7 @@ void readconfig()
     char line[256];
     int getips = 0; int gettime = 0; int getlog = 0;
     int ipc = 0;
-    for (int i = 0; i < 64; ++i) { iplist[i] = NULL; }
+    for (int i = 0; i < 64; ++i) { free(iplist[i]); iplist[i] = NULL; }
 
     while (fgets(line, 256, config))
     {
